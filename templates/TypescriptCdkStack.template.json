@@ -1,0 +1,901 @@
+{
+  "Resources": {
+    "DocumentsBucket9EC9DEB9": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/DocumentsBucket/Resource"
+      }
+    },
+    "NetworkingConstructAppVPC93DB1567": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/Resource"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet1Subnet660D22C8": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/24",
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/Subnet"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet1RouteTableADE0E594": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/RouteTable"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet1RouteTableAssociation4D96D001": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet1RouteTableADE0E594"
+        },
+        "SubnetId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet1Subnet660D22C8"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/RouteTableAssociation"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet1DefaultRouteBF81A149": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet1RouteTableADE0E594"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "NetworkingConstructAppVPCIGW91624FC1"
+        }
+      },
+      "DependsOn": [
+        "NetworkingConstructAppVPCVPCGWE6FD25E8"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/DefaultRoute"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet1EIPA96CC89C": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/EIP"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet1NATGatewayD224EF80": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet1Subnet660D22C8"
+        },
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "NetworkingConstructAppVPCPublicSubnet1EIPA96CC89C",
+            "AllocationId"
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/NATGateway"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet2SubnetDB4E73CE": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.1.0/24",
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/Subnet"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet2RouteTable23D10B5F": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/RouteTable"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet2RouteTableAssociation4DBBE32A": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet2RouteTable23D10B5F"
+        },
+        "SubnetId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet2SubnetDB4E73CE"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/RouteTableAssociation"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet2DefaultRoute6B1D8435": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet2RouteTable23D10B5F"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "NetworkingConstructAppVPCIGW91624FC1"
+        }
+      },
+      "DependsOn": [
+        "NetworkingConstructAppVPCVPCGWE6FD25E8"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/DefaultRoute"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet2EIP5C2BE200": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/EIP"
+      }
+    },
+    "NetworkingConstructAppVPCPublicSubnet2NATGateway39AF7173": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet2SubnetDB4E73CE"
+        },
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "NetworkingConstructAppVPCPublicSubnet2EIP5C2BE200",
+            "AllocationId"
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/NATGateway"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet1Subnet1F579DA7": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.2.0/24",
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/Subnet"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet1RouteTableB0081448": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/RouteTable"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet1RouteTableAssociationFF8FC898": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPrivateSubnet1RouteTableB0081448"
+        },
+        "SubnetId": {
+          "Ref": "NetworkingConstructAppVPCPrivateSubnet1Subnet1F579DA7"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/RouteTableAssociation"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet1DefaultRouteE004414E": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPrivateSubnet1RouteTableB0081448"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet1NATGatewayD224EF80"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/DefaultRoute"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet2SubnetC41764F1": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.3.0/24",
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/Subnet"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet2RouteTable245388A8": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/RouteTable"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet2RouteTableAssociation9244A245": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPrivateSubnet2RouteTable245388A8"
+        },
+        "SubnetId": {
+          "Ref": "NetworkingConstructAppVPCPrivateSubnet2SubnetC41764F1"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/RouteTableAssociation"
+      }
+    },
+    "NetworkingConstructAppVPCPrivateSubnet2DefaultRouteB1917E94": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "NetworkingConstructAppVPCPrivateSubnet2RouteTable245388A8"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "NetworkingConstructAppVPCPublicSubnet2NATGateway39AF7173"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/DefaultRoute"
+      }
+    },
+    "NetworkingConstructAppVPCIGW91624FC1": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "App",
+            "Value": "DocumentManagement"
+          },
+          {
+            "Key": "Environment",
+            "Value": "Development"
+          },
+          {
+            "Key": "Module",
+            "Value": "Networking"
+          },
+          {
+            "Key": "Name",
+            "Value": "TypescriptCdkStack/NetworkingConstruct/AppVPC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/IGW"
+      }
+    },
+    "NetworkingConstructAppVPCVPCGWE6FD25E8": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "NetworkingConstructAppVPC93DB1567"
+        },
+        "InternetGatewayId": {
+          "Ref": "NetworkingConstructAppVPCIGW91624FC1"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/NetworkingConstruct/AppVPC/VPCGW"
+      }
+    },
+    "CDKMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "Properties": {
+        "Analytics": "v2:deflate64:H4sIAAAAAAAA/02PQQ+CMAyFf4v3UQWNnpUY40UJGq9mjBoruBnWaQzhv8tExVO/vr60rxGEEYwG8mEDlRdBSRnUO5aqEK10rO0Y6oVTBbKIT7qjRqCKoD7clNcOSSwSl5Wkdi7Tna+n1DjGvcxK7PVem1trFEkmo39mD8t14stG8koyPuRTJBXdW+wXrzVj1fLX0CX5dHNuPzhfUXPT+MnW8c2xSNEaV6n3iX+Ojc7Jh2iENjnCxQ7v4QTCGUwHF0sUVE4zXRHSrr4ArBvKOTQBAAA="
+      },
+      "Metadata": {
+        "aws:cdk:path": "TypescriptCdkStack/CDKMetadata/Default"
+      },
+      "Condition": "CDKMetadataAvailable"
+    }
+  },
+  "Outputs": {
+    "DocumentsBucketNameExport": {
+      "Value": {
+        "Ref": "DocumentsBucket9EC9DEB9"
+      },
+      "Export": {
+        "Name": "DocumentsBucketName"
+      }
+    }
+  },
+  "Conditions": {
+    "CDKMetadataAvailable": {
+      "Fn::Or": [
+        {
+          "Fn::Or": [
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "af-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-east-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-northeast-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-northeast-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-southeast-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-southeast-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ca-central-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "cn-north-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "cn-northwest-1"
+              ]
+            }
+          ]
+        },
+        {
+          "Fn::Or": [
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-central-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-north-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-west-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-west-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-west-3"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "me-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "sa-east-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-east-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-east-2"
+              ]
+            }
+          ]
+        },
+        {
+          "Fn::Or": [
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-west-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-west-2"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+    }
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5"
+                  ],
+                  {
+                    "Ref": "BootstrapVersion"
+                  }
+                ]
+              }
+            ]
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+        }
+      ]
+    }
+  }
+}

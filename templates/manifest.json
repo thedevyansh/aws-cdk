@@ -1,0 +1,239 @@
+{
+  "version": "16.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "TypescriptCdkStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "TypescriptCdkStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "TypescriptCdkStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "TypescriptCdkStack.template.json",
+        "tags": {
+          "App": "DocumentManagement",
+          "Environment": "Development"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4b6ff3cbdc6e0c9464347b635c75fa0fd0a6e5fb394d58d9c92acf2d94cd63ef.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "TypescriptCdkStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "TypescriptCdkStack.assets"
+      ],
+      "metadata": {
+        "/TypescriptCdkStack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "App",
+                "Value": "DocumentManagement"
+              },
+              {
+                "Key": "Environment",
+                "Value": "Development"
+              }
+            ]
+          }
+        ],
+        "/TypescriptCdkStack/DocumentsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DocumentsBucket9EC9DEB9"
+          }
+        ],
+        "/TypescriptCdkStack/DocumentsBucketNameExport": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DocumentsBucketNameExport"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPC93DB1567"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet1Subnet660D22C8"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet1RouteTableADE0E594"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet1RouteTableAssociation4D96D001"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet1DefaultRouteBF81A149"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet1EIPA96CC89C"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet1NATGatewayD224EF80"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet2SubnetDB4E73CE"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet2RouteTable23D10B5F"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet2RouteTableAssociation4DBBE32A"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet2DefaultRoute6B1D8435"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet2EIP5C2BE200"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PublicSubnet2/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPublicSubnet2NATGateway39AF7173"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet1Subnet1F579DA7"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet1RouteTableB0081448"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet1RouteTableAssociationFF8FC898"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet1DefaultRouteE004414E"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet2SubnetC41764F1"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet2RouteTable245388A8"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet2RouteTableAssociation9244A245"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/PrivateSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCPrivateSubnet2DefaultRouteB1917E94"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCIGW91624FC1"
+          }
+        ],
+        "/TypescriptCdkStack/NetworkingConstruct/AppVPC/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NetworkingConstructAppVPCVPCGWE6FD25E8"
+          }
+        ],
+        "/TypescriptCdkStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/TypescriptCdkStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/TypescriptCdkStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/TypescriptCdkStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "TypescriptCdkStack"
+    }
+  }
+}
