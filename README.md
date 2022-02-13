@@ -1,14 +1,6 @@
-# Welcome to the CDK TypeScript project!
+# Infrastructure as Code
+Well, I was excited enough to launch my infrastructure as code on AWS cloud using AWS CDK. After all, who doesn't want to leverage the benefits of development workflow to avoid the embarrassing errors we are all destined to make manually!
 
-This is a project for TypeScript development with CDK.
+## Architecture of resources provisioned on AWS
+![architecture](architecture.png)
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
